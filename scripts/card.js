@@ -1,14 +1,4 @@
-import {el, setChildren, mount} from 'redom';
-
-// const inputElems = (classElem, textElem) => {
-//   const formInputWrap = el('div', {className: `form__input-wrap ${classElem}`});
-//   const label = el('label', {className: 'form__label form__holder-label'},
-//       textElem);
-//   const input = el('input', {className: 'input input__holder', type: 'text'},
-//       textElem);
-//   return setChildren(formInputWrap, [label, input]);
-// };
-
+import {el, setChildren} from 'redom';
 
 export const card = () => {
   const title = el('p', {className: 'secure'}, 'Secure Checkout');
@@ -23,10 +13,10 @@ export const card = () => {
   const creditCard = el('div',
       {className: 'credit-card'}, [cardNumber, cardPersonal]);
 
-  const card = el('div', {className: 'card'}, [title, creditCard]);
-  const wrapper = el('div', {className: 'wrapper'}, card);
+  const cardElem = el('div', {className: 'card'}, [title, creditCard]);
+  const wrapper = el('div', {className: 'wrapper'}, cardElem);
   setChildren(document.body, wrapper);
-  return card;
+  return {cardElem, cardNumber, cardName, cardDate};
 };
 
 export const form = () => {
@@ -34,16 +24,16 @@ export const form = () => {
 
   const formInputWrap = el('div',
       {className: 'form__input-wrap form__input-wrap_holder'});
-  const label = el('label', {className: 'form__label form__holder-label',
+  const labelHolder = el('label', {className: 'form__label form__holder-label',
     for: 'input__holder'}, 'Card Holder');
-  const input = el('input', {className: 'input input__holder',
+  const inputHolder = el('input', {className: 'input input__holder',
     type: 'text', id: 'input__holder'});
 
   const formInputWrapNumber = el('div',
       {className: 'form__input-wrap form__input-wrap_number'});
   const labelNumber = el('label', {className: 'form__label form__number-label',
     for: 'input__number'}, 'Card Number');
-  const inputNumber = el('input', {className: 'input input__holder',
+  const inputNumber = el('input', {className: 'input input__number',
     type: 'text', id: 'input__number'});
 
   const formInputWrapDate = el('div',
@@ -62,38 +52,11 @@ export const form = () => {
 
   const button = el('button', {className: 'form__button'}, 'CHECK OUT');
 
-  setChildren(formInputWrap, [label, input]);
+  setChildren(formInputWrap, [labelHolder, inputHolder]);
   setChildren(formInputWrapCvv, [labelCvv, inputCvv]);
   setChildren(formInputWrapDate, [labelDate, inputDate]);
   setChildren(formInputWrapNumber, [labelNumber, inputNumber]);
   setChildren(formElem, [formInputWrap, formInputWrapNumber,
     formInputWrapDate, formInputWrapCvv, button]);
-  return formElem;
+  return {formElem, inputHolder, inputNumber, inputDate};
 };
-
-
-`
-<form action="#" class="form" id="form">
-  <div class="form__input-wrap form__input-wrap_holder">
-    <label for="" class="form__label form__holder-label">Card Holder</label>
-    <input type="text" class="input input__holder">
-  </div>
-
-  <div class="form__input-wrap form__input-wrap_number">
-    <label for="" class="form__label form__number-label">Card Number</label>
-    <input class="input input__number" id="cardNumber">
-  </div>
-
-  <div class="form__input-wrap form__input-wrap_date">
-    <label for="" class="form__label form__date-label">Card Expiry</label>
-    <input type="text" class="input input__date">
-  </div>
-
-  <div class="form__input-wrap form__input-wrap_cvv">
-    <label for="" class="form__label form__cvv-label">CVV</label>
-    <input type="text" class="input input__cvv">
-  </div>
-
-  <button class="form__button">CHECK OUT</button>
-</form>
-`;
