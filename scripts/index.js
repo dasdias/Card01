@@ -1,14 +1,16 @@
 
-import {el, setChildren, mount} from 'redom';
+import IMask from 'imask';
+import {mount} from 'redom';
 import {card, form} from './card';
 
+// Получаем элементы из карты и формы
 const {cardElem, cardNumber, cardName, cardDate} = card();
-const {formElem, inputHolder, inputNumber, inputDate} = form();
+const {formElem, inputHolder, inputNumber, inputDate, inputCvv} = form();
 
+// Вставляем элементы на страницу
 mount(cardElem, formElem);
 
-const cartRegXep = /^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/;
-
+// обрабатываем данные держателя карты
 inputHolder.addEventListener('input', (e) => {
   const nameHolder = inputHolder.value;
   if (/(^\w+\s+\w+.*$|^[А-Яа-яЁё]+\s+[А-Яа-яЁё]+.*$)/.test(inputHolder.value)) {
@@ -22,14 +24,30 @@ inputHolder.addEventListener('input', (e) => {
   }
 });
 
+const maskNumber = IMask(inputNumber, {mask: '0000 0000 0000 0000'});
+const maskDate = IMask(inputDate, {mask: '00/00'});
+
+// Обрабатываем данные номера карты
 inputNumber.addEventListener('input', () => {
-  // if (/(.?){1,16}/.test(inputNumber.value)) {
-  //   console.log('до 16');
-  // } else {
-  //   console.log('Больше 16');
-  // }
-  inputNumber.value = inputNumber.value.replace(/[^\d]/g, '');
-  const inputNumberValue = inputNumber.value.replace(/(.{4})/g, '$1 ').trim();
-  // console.log(cartRegXep.test(inputNumberValue));
-  cardNumber.textContent = inputNumberValue;
+  const inputNumberValue = inputNumber.value.trim();
+  if (/[\d]/g.test(inputNumberValue)) {
+    cardNumber.textContent = inputNumberValue;
+  }
+});
+
+// Обрабатываем дату
+inputDate.addEventListener('input', () => {
+  const cardDateValue = inputDate.value.trim();
+  if (/[\d]/g.test(cardDateValue)) {
+    cardDate.textContent = cardDateValue;
+  }
+});
+
+// Обрабатываем CVV code
+inputCvv.addEventListener('input', () => {
+  const inputCvvValue = inputCvv.value.trim();
+  inputCvv.value = inputCvvValue.replace(/[^\d]/, '');
+  if (inputCvvValue.length > 3) {
+    inputCvv.value = inputCvvValue.slice(0, 3);
+  }
 });

@@ -1,5 +1,6 @@
 import {el, setChildren} from 'redom';
 
+// Верхний блок карты
 export const card = () => {
   const title = el('p', {className: 'secure'}, 'Secure Checkout');
 
@@ -19,6 +20,7 @@ export const card = () => {
   return {cardElem, cardNumber, cardName, cardDate};
 };
 
+// Форма карты
 export const form = () => {
   const formElem = el('form', {className: 'form', id: 'form'});
 
@@ -32,23 +34,23 @@ export const form = () => {
   const formInputWrapNumber = el('div',
       {className: 'form__input-wrap form__input-wrap_number'});
   const labelNumber = el('label', {className: 'form__label form__number-label',
-    for: 'input__number'}, 'Card Number');
+    for: 'cardNumber'}, 'Card Number');
   const inputNumber = el('input', {className: 'input input__number',
-    type: 'text', id: 'input__number'});
+    type: 'text', id: 'cardNumber', placeholder: 'xxxx xxxx xxxx xxxx'});
 
   const formInputWrapDate = el('div',
       {className: 'form__input-wrap form__input-wrap_date'});
   const labelDate = el('label', {className: 'form__label form__date-label',
-    for: 'cardNumber'}, 'Card Expiry');
+    for: 'input__date'}, 'Card Expiry');
   const inputDate = el('input', {className: 'input input__date',
-    type: 'text', id: 'cardNumber'});
+    type: 'text', id: 'input__date'});
 
   const formInputWrapCvv = el('div',
       {className: 'form__input-wrap form__input-wrap_cvv'});
   const labelCvv = el('label', {className: 'form__label form__cvv-label',
-    for: 'cardNumber'}, 'CVV');
+    for: 'input__cvv'}, 'CVV');
   const inputCvv = el('input', {className: 'input input__cvv',
-    type: 'text', id: 'cardNumber'});
+    type: 'text', id: 'input__cvv'});
 
   const button = el('button', {className: 'form__button'}, 'CHECK OUT');
 
@@ -58,5 +60,5 @@ export const form = () => {
   setChildren(formInputWrapNumber, [labelNumber, inputNumber]);
   setChildren(formElem, [formInputWrap, formInputWrapNumber,
     formInputWrapDate, formInputWrapCvv, button]);
-  return {formElem, inputHolder, inputNumber, inputDate};
+  return {formElem, inputHolder, inputNumber, inputDate, inputCvv, button};
 };
