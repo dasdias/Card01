@@ -7,7 +7,7 @@ export const card = () => {
   const cardNumber = el('span',
       {className: 'card__number'}, 'xxxx xxxx xxxx xxxx');
   const cardName = el('span',
-      {className: 'card__name'}, 'John Doe');
+      {className: 'card__name', style: {'word-break': 'break-word', 'padding-right': '10px'}}, 'John Doe');
   const cardDate = el('span', {className: 'card__date'}, '04/24');
   const cardPersonal = el('div',
       {className: 'card__personal'}, [cardName, cardDate]);

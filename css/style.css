@@ -55,7 +55,7 @@
 
 .credit-card {
   width: 365px;
-  height: 190px;
+  min-height: 190px;
   background: linear-gradient(258.77deg, rgba(200, 147, 216, 0.53) 26.64%, #EFA3B6 70.3%);
   border-radius: 32px;
   display: flex;

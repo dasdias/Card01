@@ -13,14 +13,16 @@ mount(cardElem, formElem);
 // обрабатываем данные держателя карты
 inputHolder.addEventListener('input', (e) => {
   const nameHolder = inputHolder.value;
-  if (/(^\w+\s+\w+.*$|^[А-Яа-яЁё]+\s+[А-Яа-яЁё]+.*$)/.test(inputHolder.value)) {
+  if (!/[\d]/.test(nameHolder) &&
+    /(^\w+\s+\w+.*$|^[А-Яа-яЁё]+\s+[А-Яа-яЁё]+.*$)/.test(inputHolder.value)) {
     inputHolder.style.outline = '';
     cardName.style.color = '';
     cardName.textContent = nameHolder;
   } else {
+    inputHolder.value = nameHolder.replace(/[\d]/, '');
     inputHolder.style.outline = '1px solid red';
     cardName.style.color = 'red';
-    cardName.textContent = nameHolder;
+    cardName.textContent = inputHolder.value = nameHolder.replace(/[\d]/, '');
   }
 });
 
